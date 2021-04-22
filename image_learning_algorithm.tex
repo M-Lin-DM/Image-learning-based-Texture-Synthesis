@@ -1,0 +1,82 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+\begin{document}
+	
+%\begin{algorithm}
+%\caption{My algorithm}\label{euclid}
+%\begin{algorithmic}[1]
+%\Procedure{MyProcedure}{}
+%\State $\textit{stringlen} \gets \text{length of }\textit{string}$
+%\State $i \gets \textit{patlen}$
+%\BState \emph{top}:
+%\If {$i > \textit{stringlen}$} \Return false
+%\EndIf
+%\State $j \gets \textit{patlen}$
+%\BState \emph{loop}:
+%\If {$\textit{string}(i) = \textit{path}(j)$}
+%\State $j \gets j-1$.
+%\State $i \gets i-1$.
+%\State \textbf{goto} \emph{loop}.
+%\State \textbf{close};
+%\EndIf
+%\State $i \gets i+\max(\textit{delta}_1(\textit{string}(i)),\textit{delta}_2(j))$.
+%\State \textbf{goto} \emph{top}.
+%\EndProcedure
+%\end{algorithmic}
+%\end{algorithm}
+
+\vspace{10mm}
+
+\begin{algorithm}
+	\caption{Learn Image}
+	\begin{algorithmic}[1]
+		\Procedure{GAPl($Y^{(l)})$}{}
+		\For{$j = 1$ to $d^{(l)}$}
+		\State $g^{(l)}_j \gets \sum_{y=1}^{h^{(l)}} \sum_{x=1}^{w^{(l)}} Y^{(l)}_{xyj}/(h^{(l)}w^{(l)})$
+		\EndFor
+		\Return $g^{(l)}$
+		\EndProcedure
+		\newline
+		
+		\Procedure{GAPVector($X$)}{}
+		\State $g \gets \text{[ ]}$
+		\For{$l = 1$ to $m$}
+		\State $Y^{(l)} \equiv F^{(l)}(X)$
+		\If {$layer_l$ is convolution}
+		\State $g^{(l)} \gets \text{GAPL}(Y^{(l)})$
+		\State $g \gets [g, g^{(l)}]$
+		
+		\EndIf
+		\EndFor
+		\Return $g$
+		\EndProcedure
+		\newline
+		
+		\State $Z \gets Z_{noise}$
+		\State $z \gets \text{GAPVector}(Z)$
+		\State $a \gets \text{GAPVector}(A)$
+		\State $L \gets \sqrt{\sum_{i}(a_i-z_i)^2}$
+		\newline
+		\BState \emph{loop}:
+		\For{$i = 1$ to $n$}
+		\State $Z \gets Z - \nabla_{bfgs}L(Z)$
+		\State $z \gets \text{GAPVector}(Z)$
+		\State $L \gets \sqrt{\sum_{i}(a_i-z_i)^2}$
+		\EndFor
+		\Return Z
+		
+
+
+	\end{algorithmic}
+\end{algorithm}
+
+
+
+\end{document} 
